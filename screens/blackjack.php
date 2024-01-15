@@ -24,7 +24,7 @@ $_SESSION['navbar_option'] = "blackjack";
         <hr style="background-color: white;">
         <Button id="bj_hit" class="btn btn-light mb-3">Hit</Button>
         <Button id="bj_2x" class="btn btn-light mb-3">2x Down</Button>
-        <Button id="bj_stand" class="btn btn-light mb-3">Stand</Button>
+        <Button id="bj_stay" class="btn btn-light mb-3">Stay</Button>
         <Button id="bj_split" class="btn btn-light mb-3">Split</Button>
         <?php $test = [1, 2, 3, 4]; ?>
     </div>
