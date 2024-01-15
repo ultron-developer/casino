@@ -26,7 +26,7 @@ $_SESSION['navbar_option'] = "blackjack";
         <?php $test = [1, 2, 3, 4]; ?>
     </div>
     <script type="text/javascript">
-        var j = new Array(<?php echo json_encode($_SESSION); ?>);;
-        console.log(j);
+        var j = new Array(<?php echo json_encode($_SESSION); ?>);
+        // console.log(j);
     </script>
 </body>
