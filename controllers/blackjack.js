@@ -1,8 +1,8 @@
 var dealer_sum = 0;
-var player1_sum = 0;
+var player_sum = 0;
 
 var dealer_ace_count = 0;
-var player1_sum = 0;
+var player_ace_count = 0;
 
 var deck;
 var hidden;
@@ -46,15 +46,43 @@ function shuffle_deck() {
     deck[i] = deck[j];
     deck[j] = temp;
   }
-  console.log(deck);
+  // console.log(deck);
 }
 
 function start_game() {
-  hidden = deck.pop();
-  dealer_sum += get_value(hidden);
+  let player_card_1 = document.createElement("img");
+  let card = deck.pop();
+  player_sum += get_value(card);
+  player_ace_count += check_ace(card);
+  player_card_1.src = "./images/cards/" + card + ".png";
+  document.getElementById("player-cards").appendChild(player_card_1);
+
+  let dealer_card_1 = document.createElement("img");
+  card = deck.pop();
+  let hidden = card;
+  dealer_sum += get_value(card);
   dealer_ace_count += check_ace(hidden);
-  console.log(hidden);
-  console.log(dealer_sum);
+  dealer_card_1.src = "./images/cards/" + "back" + ".png";
+  document.getElementById("dealer-cards").appendChild(dealer_card_1);
+
+  let player_card_2 = document.createElement("img");
+  card = deck.pop();
+  player_sum += get_value(card);
+  player_ace_count += check_ace(card);
+  player_card_2.src = "./images/cards/" + card + ".png";
+  document.getElementById("player-cards").appendChild(player_card_2);
+
+  let dealer_card_2 = document.createElement("img");
+  card = deck.pop();
+  dealer_sum += get_value(card);
+  dealer_ace_count += check_ace(hidden);
+  dealer_card_2.src = "./images/cards/" + card + ".png";
+  document.getElementById("dealer-cards").appendChild(dealer_card_2);
+
+  document.getElementById("player-sum").innerText =
+    "Player's Total : " + player_sum;
+  document.getElementById("dealer-sum").innerText =
+    "Dealer's Total : " + dealer_sum;
 }
 
 function get_value(card) {

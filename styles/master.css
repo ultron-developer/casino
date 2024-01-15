@@ -396,3 +396,7 @@ div.baccarat_per_show {
   justify-content: center;
   align-items: center;
 }
+
+div.bj_card_div img {
+  width: 100px;
+}
