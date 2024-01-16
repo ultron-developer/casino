@@ -7,7 +7,7 @@ var player_ace_count = 0;
 var deck;
 var hidden;
 var can_hit = true;
-
+var i = 1;
 window.onload = function () {
   build_deck();
   shuffle_deck();
@@ -58,10 +58,11 @@ function start_game() {
   document.getElementById("player-cards").appendChild(player_card_1);
 
   let dealer_card_1 = document.createElement("img");
+  dealer_card_1.id = "hidden";
   card = deck.pop();
-  let hidden = card;
+  hidden = card;
   dealer_sum += get_value(card);
-  dealer_ace_count += check_ace(hidden);
+  dealer_ace_count += check_ace(card);
   dealer_card_1.src = "./images/cards/" + "back" + ".png";
   document.getElementById("dealer-cards").appendChild(dealer_card_1);
 
@@ -75,11 +76,12 @@ function start_game() {
   let dealer_card_2 = document.createElement("img");
   card = deck.pop();
   dealer_sum += get_value(card);
-  dealer_ace_count += check_ace(hidden);
+  dealer_ace_count += check_ace(card);
   dealer_card_2.src = "./images/cards/" + card + ".png";
   document.getElementById("dealer-cards").appendChild(dealer_card_2);
 
   document.getElementById("bj_hit").addEventListener("click", hit);
+  document.getElementById("bj_stay").addEventListener("click", stay);
 
   document.getElementById("player-sum").innerText =
     "Player's Total : " + player_sum;
@@ -119,26 +121,49 @@ function hit() {
     let card = deck.pop();
     player_ace_count += check_ace(card);
     player_sum += get_value(card);
-    console.log(player_sum);
     if (player_sum > 21 && player_ace_count > 0) {
       player_sum -= 10;
       player_ace_count -= 1;
     }
-    console.log(player_sum);
     player_card.src = "./images/cards/" + card + ".png";
     document.getElementById("player-cards").appendChild(player_card);
   }
   if (player_sum >= 21) {
-    can_hit = false;
+    stay();
   }
   document.getElementById("player-sum").innerText =
     "Player's Total : " + player_sum;
 }
 
-function reduce_ace(player_sum, player_ace_count) {
-  while (player_sum > 21 && player_ace_count > 0) {
-    player_sum -= 10;
-    player_ace_count -= 1;
+function reduce_ace(sum, ace_count) {
+  while (sum > 21 && ace_count > 0) {
+    sum -= 10;
+    ace_count -= 1;
   }
   return player_sum;
+}
+
+function stay() {
+  can_hit = false;
+  document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
+  i = 1;
+  while (dealer_sum < 17 && player_sum <= 21) {
+    setInterval(() => {
+      let dealer_card_2 = document.createElement("img");
+      card = deck.pop();
+      dealer_sum += get_value(card);
+      dealer_ace_count += check_ace(card);
+      if (dealer_sum > 21 && dealer_ace_count > 0) {
+        dealer_sum -= 10;
+        dealer_ace_count -= 1;
+      }
+      dealer_card_2.src = "./images/cards/" + card + ".png";
+      document.getElementById("dealer-cards").appendChild(dealer_card_2);
+      document.getElementById("dealer-sum").innerText =
+        "Dealer's Total : " + dealer_sum;
+
+      console.log(i);
+    }, 2000);
+    i++;
+  }
 }
