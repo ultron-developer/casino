@@ -8,6 +8,7 @@ var deck;
 var hidden;
 var can_hit = true;
 var can_deal = true;
+var result = "";
 var i = 1;
 window.onload = function () {
   build_deck();
@@ -47,11 +48,11 @@ function shuffle_deck() {
     deck[i] = deck[j];
     deck[j] = temp;
   }
-  // console.log(deck);
 }
 
 function deal() {
   if (!can_deal) {
+    console.log(can_deal);
     return;
   }
   if (deck.length < 15) {
@@ -64,16 +65,18 @@ function deal() {
   dealer_ace_count = 0;
   player_sum = 0;
   dealer_sum = 0;
+  result = "";
   document.getElementById("player-cards").replaceChildren();
   document.getElementById("dealer-cards").replaceChildren();
-  start_game();
+  document.getElementById("bj-result").innerText = "Result : " + result;
   can_deal = false;
-  //console.log(deck.length);
+  start_game();
 }
 
 function start_game() {
   let player_card_1 = document.createElement("img");
   let card = deck.pop();
+  //card = "ace_of_spades";
   player_sum += get_value(card);
   player_ace_count += check_ace(card);
   player_card_1.src = "./images/cards/" + card + ".png";
@@ -90,6 +93,7 @@ function start_game() {
 
   let player_card_2 = document.createElement("img");
   card = deck.pop();
+  //card = "ace_of_spades";
   player_sum += get_value(card);
   player_ace_count += check_ace(card);
   player_card_2.src = "./images/cards/" + card + ".png";
@@ -97,6 +101,7 @@ function start_game() {
 
   let dealer_card_2 = document.createElement("img");
   card = deck.pop();
+  card = "ace_of_spades";
   dealer_sum += get_value(card);
   dealer_ace_count += check_ace(card);
   dealer_card_2.src = "./images/cards/" + card + ".png";
@@ -110,8 +115,15 @@ function start_game() {
   document.getElementById("dealer-sum").innerText =
     "Dealer's Total : " + dealer_sum;
 
+  if (dealer_sum == 21) {
+    dealer_bj();
+  }
   if (player_sum == 21) {
-    can_hit = false;
+    player_bj();
+  }
+  if (player_sum == 22) {
+    document.getElementById("player-sum").innerText =
+      "Player's Total : " + "12";
   }
 }
 
@@ -143,7 +155,7 @@ function hit() {
     let card = deck.pop();
     player_ace_count += check_ace(card);
     player_sum += get_value(card);
-    if (player_sum > 21 && player_ace_count > 0) {
+    while (player_sum > 21 && player_ace_count > 0) {
       player_sum -= 10;
       player_ace_count -= 1;
     }
@@ -165,8 +177,33 @@ function reduce_ace(sum, ace_count) {
   return player_sum;
 }
 
+function player_bj() {
+  can_hit = false;
+  can_deal = true;
+  document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
+  if (dealer_sum == 21) {
+    result = "Its a Push!";
+  } else {
+    result = "BlackJack for Player !!";
+  }
+  document.getElementById("bj-result").innerText = "Result : " + result;
+}
+
+function dealer_bj() {
+  can_hit = false;
+  can_deal = true;
+  document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
+  if (player_sum == 21) {
+    result = "Its a Push!";
+  } else {
+    result = "BlackJack for Dealer !!";
+  }
+  document.getElementById("bj-result").innerText = "Result : " + result;
+}
+
 function stay() {
   can_hit = false;
+  can_deal = true;
   document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
   i = 1;
   while (dealer_sum < 17 && player_sum <= 21) {
@@ -182,8 +219,18 @@ function stay() {
     document.getElementById("dealer-cards").appendChild(dealer_card_2);
     document.getElementById("dealer-sum").innerText =
       "Dealer's Total : " + dealer_sum;
-    //console.log(i);
     i++;
   }
-  can_deal = true;
+  if (player_sum > 21) {
+    result = "Player Bust! Dealer Win.";
+  } else if (dealer_sum > 21) {
+    result = "Dealer Bust! Player Win.";
+  } else if (player_sum == dealer_sum) {
+    result = "Its a Push!";
+  } else if (player_sum > dealer_sum) {
+    result = "Player Win!";
+  } else {
+    result = "Dealer Win!";
+  }
+  document.getElementById("bj-result").innerText = "Result : " + result;
 }

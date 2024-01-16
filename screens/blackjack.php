@@ -19,8 +19,9 @@ $_SESSION['navbar_option'] = "blackjack";
         <div class="bj_card_div" id="dealer-cards"></div>
         <hr style="background-color: white;">
         <h4 id="player-sum" class="text-white my-3">Player's Total :</h4>
-        <hr style="background-color: white;">
         <div class="bj_card_div" id="player-cards"></div>
+        <hr style="background-color: white;">
+        <h4 id="bj-result" class="text-white my-3">Result :</h4>
         <hr style="background-color: white;">
         <Button id="bj_deal" class="btn btn-light mb-3">Deal</Button>
         <Button id="bj_hit" class="btn btn-light mb-3">Hit</Button>
