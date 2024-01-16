@@ -373,21 +373,21 @@ a.contactbtn:hover {
   font-weight: 500;
   color: rgb(0, 196, 0);
   display: inline-block;
-  margin: 3px 5px;
+  margin: 3px 5px 3px 0px;
 }
 
 .result_baccarat_p {
   font-weight: 500;
   color: blue;
   display: inline-block;
-  margin: 3px 5px;
+  margin: 3px 5px 3px 0px;
 }
 
 .result_baccarat_b {
   font-weight: 500;
   color: red;
   display: inline-block;
-  margin: 3px 5px;
+  margin: 3px 5px 3px 0px;
 }
 
 div.baccarat_per_show {

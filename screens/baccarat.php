@@ -78,17 +78,29 @@ $_SESSION['navbar_option'] = "baccarat";
             <Button id="2" class="btn btn-light mb-3" type="submit" name="action" value="baccarat">Deal</Button>
         </form>
     </div>
-    <div class="container bg-white baccarat_per_show text-center">
+    <div class="container bg-white baccarat_per_show">
         <div>
-            <?php if (isset($_SESSION['baccarat_history'])) {
+            <?php if (isset($_SESSION['baccarat_history']) & (count($_SESSION['baccarat_history']) > 0)) {
                 $values = array_count_values($_SESSION['baccarat_history']);
-                $P_percentage = round($values["P"] / count($_SESSION['baccarat_history']) * 100, 2);
-                $T_percentage = round($values["T"] / count($_SESSION['baccarat_history']) * 100, 2);
-                $B_percentage = round($values["B"] / count($_SESSION['baccarat_history']) * 100, 2);
+                $p =  0;
+                $t =  0;
+                $b =  0;
+                if (array_key_exists('P', $values)) {
+                    $p = $values["P"];
+                }
+                if (array_key_exists('T', $values)) {
+                    $t = $values["T"];
+                }
+                if (array_key_exists('B', $values)) {
+                    $b = $values["B"];
+                }
+                $P_percentage = round($p / count($_SESSION['baccarat_history']) * 100, 2);
+                $T_percentage = round($t / count($_SESSION['baccarat_history']) * 100, 2);
+                $B_percentage = round($b / count($_SESSION['baccarat_history']) * 100, 2);
             } ?>
-            <p class="result_baccarat_p">P: <?php echo $P_percentage ?>%</p>
-            <p class="result_baccarat_t">T: <?php echo $T_percentage ?>%</p>
-            <p class="result_baccarat_b">B: <?php echo $B_percentage ?>%</p>
+            <p class="result_baccarat_p">P: <?php echo isset($P_percentage) ? $P_percentage : 0 ?>%</p>
+            <p class="result_baccarat_t">T: <?php echo isset($T_percentage) ? $T_percentage : 0 ?>%</p>
+            <p class="result_baccarat_b">B: <?php echo isset($B_percentage) ? $B_percentage : 0 ?>%</p>
         </div>
         <hr>
         <h5>Previous Results:</h5>
