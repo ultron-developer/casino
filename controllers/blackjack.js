@@ -7,11 +7,12 @@ var player_ace_count = 0;
 var deck;
 var hidden;
 var can_hit = true;
+var can_deal = true;
 var i = 1;
 window.onload = function () {
   build_deck();
   shuffle_deck();
-  start_game();
+  document.getElementById("bj_deal").addEventListener("click", deal);
 };
 
 function build_deck() {
@@ -47,6 +48,27 @@ function shuffle_deck() {
     deck[j] = temp;
   }
   // console.log(deck);
+}
+
+function deal() {
+  if (!can_deal) {
+    return;
+  }
+  if (deck.length < 15) {
+    build_deck();
+    shuffle_deck();
+  }
+  i = 1;
+  can_hit = true;
+  player_ace_count = 0;
+  dealer_ace_count = 0;
+  player_sum = 0;
+  dealer_sum = 0;
+  document.getElementById("player-cards").replaceChildren();
+  document.getElementById("dealer-cards").replaceChildren();
+  start_game();
+  can_deal = false;
+  //console.log(deck.length);
 }
 
 function start_game() {
@@ -160,7 +182,8 @@ function stay() {
     document.getElementById("dealer-cards").appendChild(dealer_card_2);
     document.getElementById("dealer-sum").innerText =
       "Dealer's Total : " + dealer_sum;
-    console.log(i);
+    //console.log(i);
     i++;
   }
+  can_deal = true;
 }
