@@ -148,22 +148,19 @@ function stay() {
   document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
   i = 1;
   while (dealer_sum < 17 && player_sum <= 21) {
-    setInterval(() => {
-      let dealer_card_2 = document.createElement("img");
-      card = deck.pop();
-      dealer_sum += get_value(card);
-      dealer_ace_count += check_ace(card);
-      if (dealer_sum > 21 && dealer_ace_count > 0) {
-        dealer_sum -= 10;
-        dealer_ace_count -= 1;
-      }
-      dealer_card_2.src = "./images/cards/" + card + ".png";
-      document.getElementById("dealer-cards").appendChild(dealer_card_2);
-      document.getElementById("dealer-sum").innerText =
-        "Dealer's Total : " + dealer_sum;
-
-      console.log(i);
-    }, 2000);
+    let dealer_card_2 = document.createElement("img");
+    card = deck.pop();
+    dealer_sum += get_value(card);
+    dealer_ace_count += check_ace(card);
+    if (dealer_sum > 21 && dealer_ace_count > 0) {
+      dealer_sum -= 10;
+      dealer_ace_count -= 1;
+    }
+    dealer_card_2.src = "./images/cards/" + card + ".png";
+    document.getElementById("dealer-cards").appendChild(dealer_card_2);
+    document.getElementById("dealer-sum").innerText =
+      "Dealer's Total : " + dealer_sum;
+    console.log(i);
     i++;
   }
 }
