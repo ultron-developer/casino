@@ -134,8 +134,7 @@ function start_game() {
 
   document.getElementById("player-sum").innerText =
     "Player's Total : " + player_sum_array[0];
-  document.getElementById("dealer-sum").innerText =
-    "Dealer's Total : " + dealer_sum;
+  document.getElementById("dealer-sum").innerText = "Dealer's Total : ?";
 
   if (dealer_sum == 21) {
     dealer_bj();
