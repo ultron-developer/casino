@@ -233,6 +233,8 @@ function player_bj() {
   } else {
     result = "BlackJack for Player !!";
   }
+  document.getElementById("dealer-sum").innerText =
+    "Dealer's Total : " + dealer_sum;
   document.getElementById("bj-result").style.display = "block";
   document.getElementById("bj-result").innerText = "Result : " + result;
 }
@@ -247,6 +249,8 @@ function dealer_bj() {
   } else {
     result = "BlackJack for Dealer !!";
   }
+  document.getElementById("dealer-sum").innerText =
+    "Dealer's Total : " + dealer_sum;
   document.getElementById("bj-result").style.display = "block";
   document.getElementById("bj-result").innerText = "Result : " + result;
 }
