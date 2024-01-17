@@ -20,14 +20,26 @@ $_SESSION['navbar_option'] = "blackjack";
         <hr style="background-color: white;">
         <h4 id="player-sum" class="text-white my-3">Player's Total :</h4>
         <div class="bj_card_div" id="player-cards"></div>
+        <h4 id="bj-result" class="text-white my-3" style="display: none;">Result :</h4>
+        <div class="mt-2" id="split-btns1" style="display: none;">
+            <Button id="split_hit1" class="btn btn-light">Hit</Button>
+            <Button id="split_stay1" class="btn btn-light">Stay</Button>
+        </div>
+        <h4 id="player-sum2" class="text-white my-3" style="display: none;">Player's Total :</h4>
+        <div class="bj_card_div mt-2" id="player-cards2"></div>
+        <h4 id="bj-result2" class="text-white my-3" style="display: none;">Result :</h4>
+        <div class="mt-2" id="split-btns2" style="display: none;">
+            <Button id="split_hit1" class="btn btn-light mb-3">Hit</Button>
+            <Button id="split_stay1" class="btn btn-light mb-3">Stay</Button>
+        </div>
         <hr style="background-color: white;">
-        <h4 id="bj-result" class="text-white my-3">Result :</h4>
-        <hr style="background-color: white;">
-        <Button id="bj_deal" class="btn btn-light mb-3">Deal</Button>
-        <Button id="bj_hit" class="btn btn-light mb-3">Hit</Button>
-        <Button id="bj_2x" class="btn btn-light mb-3">2x Down</Button>
-        <Button id="bj_stay" class="btn btn-light mb-3">Stay</Button>
-        <Button id="bj_split" class="btn btn-light mb-3">Split</Button>
+        <div id="original-btns">
+            <Button id="bj_deal" class="btn btn-light mb-3">Deal</Button>
+            <Button id="bj_hit" class="btn btn-light mb-3">Hit</Button>
+            <Button id="bj_2x" class="btn btn-light mb-3">2x Down</Button>
+            <Button id="bj_stay" class="btn btn-light mb-3">Stay</Button>
+            <Button id="bj_split" class="btn btn-light mb-3">Split</Button>
+        </div>
         <?php $test = [1, 2, 3, 4]; ?>
     </div>
     <script type="text/javascript">

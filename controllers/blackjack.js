@@ -1,10 +1,13 @@
 var dealer_sum = 0;
-var player_sum = 0;
 const player_sum_array = [];
+const player_card_values = [];
 player_sum_array[0] = 0;
+player_sum_array[1] = 0;
 
 var dealer_ace_count = 0;
-var player_ace_count = 0;
+const player_ace_counts = [];
+player_ace_counts[0] = 0;
+player_ace_counts[1] = 0;
 
 var deck;
 var hidden;
@@ -13,9 +16,11 @@ var can_deal = true;
 var can_double_down = true;
 var result = "";
 var i = 1;
+
 window.onload = function () {
   build_deck();
   shuffle_deck();
+  btn_deal_show_rest_hide();
   document.getElementById("bj_deal").addEventListener("click", deal);
 };
 
@@ -54,6 +59,7 @@ function shuffle_deck() {
 }
 
 function deal() {
+  btn_deal_hide_rest_show();
   if (!can_deal) {
     return;
   }
@@ -64,16 +70,16 @@ function deal() {
   i = 1;
   can_hit = true;
   can_double_down = true;
-  player_ace_count = 0;
+  player_ace_counts[0] = 0;
   dealer_ace_count = 0;
 
   // array try
   player_sum_array[0] = 0;
-  //player_sum = 0;
   dealer_sum = 0;
   result = "";
   document.getElementById("player-cards").replaceChildren();
   document.getElementById("dealer-cards").replaceChildren();
+  document.getElementById("player-cards2").replaceChildren();
   document.getElementById("bj-result").innerText = "Result : " + result;
   can_deal = false;
   start_game();
@@ -82,10 +88,10 @@ function deal() {
 function start_game() {
   let player_card_1 = document.createElement("img");
   let card = deck.pop();
-  //card = "ace_of_spades";
+  card = "ace_of_spades";
   player_sum_array[0] += get_value(card);
-  //player_sum += get_value(card);
-  player_ace_count += check_ace(card);
+  player_card_values[0] = get_value(card);
+  player_ace_counts[0] += check_ace(card);
   player_card_1.src = "./images/cards/" + card + ".png";
   document.getElementById("player-cards").appendChild(player_card_1);
 
@@ -102,8 +108,8 @@ function start_game() {
   card = deck.pop();
   //card = "ace_of_spades";
   player_sum_array[0] += get_value(card);
-  //player_sum += get_value(card);
-  player_ace_count += check_ace(card);
+  player_card_values[1] = get_value(card);
+  player_ace_counts[0] += check_ace(card);
   player_card_2.src = "./images/cards/" + card + ".png";
   document.getElementById("player-cards").appendChild(player_card_2);
 
@@ -118,6 +124,7 @@ function start_game() {
   document.getElementById("bj_hit").addEventListener("click", hit);
   document.getElementById("bj_stay").addEventListener("click", stay);
   document.getElementById("bj_2x").addEventListener("click", double_down);
+  document.getElementById("bj_split").addEventListener("click", split);
 
   document.getElementById("player-sum").innerText =
     "Player's Total : " + player_sum_array[0];
@@ -134,6 +141,8 @@ function start_game() {
     document.getElementById("player-sum").innerText =
       "Player's Total : " + "12";
   }
+
+  check_split_available();
 }
 
 function get_value(card) {
@@ -162,11 +171,11 @@ function hit() {
   } else {
     let player_card = document.createElement("img");
     let card = deck.pop();
-    player_ace_count += check_ace(card);
+    player_ace_counts[0] += check_ace(card);
     player_sum_array[0] += get_value(card);
-    while (player_sum_array[0] > 21 && player_ace_count > 0) {
+    while (player_sum_array[0] > 21 && player_ace_counts[0] > 0) {
       player_sum_array[0] -= 10;
-      player_ace_count -= 1;
+      player_ace_counts[0] -= 1;
     }
     player_card.src = "./images/cards/" + card + ".png";
     document.getElementById("player-cards").appendChild(player_card);
@@ -189,24 +198,28 @@ function reduce_ace(sum, ace_count) {
 function player_bj() {
   can_hit = false;
   can_deal = true;
+  btn_deal_show_rest_hide();
   document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
   if (dealer_sum == 21) {
     result = "Its a Push!";
   } else {
     result = "BlackJack for Player !!";
   }
+  document.getElementById("bj-result").style.display = "block";
   document.getElementById("bj-result").innerText = "Result : " + result;
 }
 
 function dealer_bj() {
   can_hit = false;
   can_deal = true;
+  btn_deal_show_rest_hide();
   document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
   if (player_sum_array[0] == 21) {
     result = "Its a Push!";
   } else {
     result = "BlackJack for Dealer !!";
   }
+  document.getElementById("bj-result").style.display = "block";
   document.getElementById("bj-result").innerText = "Result : " + result;
 }
 
@@ -217,11 +230,11 @@ function double_down() {
   can_double_down = false;
   let player_card = document.createElement("img");
   let card = deck.pop();
-  player_ace_count += check_ace(card);
+  player_ace_counts[0] += check_ace(card);
   player_sum_array[0] += get_value(card);
-  while (player_sum_array[0] > 21 && player_ace_count > 0) {
+  while (player_sum_array[0] > 21 && player_ace_counts[0] > 0) {
     player_sum_array[0] -= 10;
-    player_ace_count -= 1;
+    player_ace_counts[0] -= 1;
   }
   player_card.src = "./images/cards/" + card + ".png";
   document.getElementById("player-cards").appendChild(player_card);
@@ -233,6 +246,7 @@ function double_down() {
 function stay() {
   can_hit = false;
   can_double_down = false;
+  btn_deal_show_rest_hide();
   can_deal = true;
   document.getElementById("hidden").src = "./images/cards/" + hidden + ".png";
   i = 1;
@@ -251,6 +265,7 @@ function stay() {
       "Dealer's Total : " + dealer_sum;
     i++;
   }
+  document.getElementById("bj-result").style.display = "block";
   get_result();
 }
 
@@ -268,3 +283,58 @@ function get_result() {
   }
   document.getElementById("bj-result").innerText = "Result : " + result;
 }
+
+function btn_deal_show_rest_hide() {
+  document.getElementById("bj_deal").style.display = "inline-block";
+  document.getElementById("bj_hit").style.display = "none";
+  document.getElementById("bj_stay").style.display = "none";
+  document.getElementById("bj_2x").style.display = "none";
+  document.getElementById("bj_split").style.display = "none";
+}
+
+function btn_deal_hide_rest_show() {
+  document.getElementById("bj_deal").style.display = "none";
+  document.getElementById("bj_hit").style.display = "inline-block";
+  document.getElementById("bj_stay").style.display = "inline-block";
+  document.getElementById("bj_2x").style.display = "inline-block";
+  document.getElementById("bj_split").style.display = "none";
+  document.getElementById("bj-result").style.display = "none";
+  document.getElementById("bj-result2").style.display = "none";
+  document.getElementById("split-btns1").style.display = "none";
+  document.getElementById("split-btns2").style.display = "none";
+}
+
+function check_split_available() {
+  if (
+    player_card_values[player_card_values.length - 1] ==
+      player_card_values[player_card_values.length - 2] &&
+    dealer_sum != 21
+  ) {
+    document.getElementById("bj_split").style.display = "inline-block";
+  }
+}
+
+function split() {
+  player_sum_array[0] -= player_card_values[0];
+  document.getElementById("player-sum").innerText =
+    "Player's Total : " + player_sum_array[0];
+  player_sum_array[1] = player_card_values[0];
+  document.getElementById("player-sum2").style.display = "block";
+  document.getElementById("player-sum2").innerText =
+    "Player's Total : " + player_sum_array[1];
+  document.getElementById("split-btns1").style.display = "block";
+  document.getElementById("original-btns").style.display = "none";
+
+  if (player_card_values[0] == 11) {
+    player_ace_counts[0] = 1;
+    player_ace_counts[1] = 1;
+  }
+
+  document.getElementById("split_hit1").addEventListener("click", hit);
+
+  console.log(player_ace_counts);
+  const list = document.getElementById("player-cards");
+  document.getElementById("player-cards2").appendChild(list.children[1]);
+}
+
+function split_hit() {}
