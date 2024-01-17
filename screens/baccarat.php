@@ -43,7 +43,7 @@ $_SESSION['navbar_option'] = "baccarat";
             foreach ($returned_array["player_cards"] as $card) {
                 $flag++;
         ?>
-                <img class="card_for_flip_1" style="height: 100px;<?php echo $flag == 3 ? "transform: rotate(90deg);margin-left:16px;" : ""; ?>" src="images/cards/<?php echo $card['img'] ?>">
+                <img class="card_for_flip_1" style="<?php echo $flag == 3 ? "transform: rotate(90deg);margin-left:16px;" : ""; ?>" src="images/cards/<?php echo $card['img'] ?>">
         <?php
             }
         }
@@ -56,7 +56,7 @@ $_SESSION['navbar_option'] = "baccarat";
             foreach ($returned_array["banker_cards"] as $card) {
                 $flag++;
         ?>
-                <img class="card_for_flip_1" style="height: 100px;<?php echo $flag == 3 ? "transform: rotate(90deg);margin-left:16px;" : ""; ?>" src="images/cards/<?php echo $card['img'] ?>">
+                <img class="card_for_flip_1" style="<?php echo $flag == 3 ? "transform: rotate(90deg);margin-left:16px;" : ""; ?>" src="images/cards/<?php echo $card['img'] ?>">
         <?php
             }
         }
@@ -102,8 +102,7 @@ $_SESSION['navbar_option'] = "baccarat";
             <p class="result_baccarat_t">T: <?php echo isset($T_percentage) ? $T_percentage : 0 ?>%</p>
             <p class="result_baccarat_b">B: <?php echo isset($B_percentage) ? $B_percentage : 0 ?>%</p>
         </div>
-        <hr>
-        <h5>Previous Results:</h5>
+        <p class="result_baccarat">Previous Results:</p>
         <?php
         if (isset($_SESSION['baccarat_history'])) {
             $results = $_SESSION['baccarat_history'];

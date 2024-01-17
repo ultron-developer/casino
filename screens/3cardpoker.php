@@ -30,7 +30,7 @@ $_SESSION['navbar_option'] = "3cardpoker";
         if (isset($result["dealer"]["cards"])) {
             foreach ($result["dealer"]["cards"] as $card) {
         ?>
-                <img class="card_for_flip_1" style="height: 100px;" src="images/cards/<?php echo $card['img'] ?>">
+                <img class="card_for_flip_1" src="images/cards/<?php echo $card['img'] ?>">
         <?php
             }
         }
@@ -42,7 +42,7 @@ $_SESSION['navbar_option'] = "3cardpoker";
         if (isset($result["player"]["cards"])) {
             foreach ($result["player"]["cards"] as $card) {
         ?>
-                <img class="card_for_flip_1" style="height: 100px;" src="images/cards/<?php echo $card['img'] ?>">
+                <img class="card_for_flip_1" src="images/cards/<?php echo $card['img'] ?>">
         <?php
             }
         }

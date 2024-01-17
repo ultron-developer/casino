@@ -369,6 +369,13 @@ a.contactbtn:hover {
   padding: 90px 0px;
 }
 
+.result_baccarat {
+  font-weight: 500;
+  text-decoration: underline;
+  display: inline-block;
+  margin: 3px 5px 3px 0px;
+}
+
 .result_baccarat_t {
   font-weight: 500;
   color: rgb(0, 196, 0);
@@ -399,4 +406,17 @@ div.baccarat_per_show {
 
 div.bj_card_div img {
   width: 75px;
+}
+
+img.card_for_flip_1 {
+  width: 75px;
+}
+
+@media only screen and (max-width: 600px) {
+  div.bj_card_div img {
+    width: 55px;
+  }
+  img.card_for_flip_1 {
+    width: 55px;
+  }
 }
