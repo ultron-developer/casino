@@ -297,8 +297,6 @@ function stay() {
     }
     dealer_card_2.src = "./images/cards/" + card + ".png";
     document.getElementById("dealer-cards").appendChild(dealer_card_2);
-    document.getElementById("dealer-sum").innerText =
-      "Dealer's Total : " + dealer_sum;
     i++;
   }
   get_result1();
@@ -308,6 +306,8 @@ function stay() {
     splited = false;
     document.getElementById("bj-result2").style.display = "block";
   }
+  document.getElementById("dealer-sum").innerText =
+    "Dealer's Total : " + dealer_sum;
 }
 
 function get_result1() {
